@@ -17,9 +17,10 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # 使用ubuntu官方源安装nginx和依赖包并设置开机启动
 apt update
-apt install nginx curl pwgen openssl netcat cron -y
-systemctl enable nginx
+apt install curl ufw -y
+apt install nginx -y
 systemctl start nginx
+systemctl enable nginx
 
 
 # 开始部署之前，我们先配置一下需要用到的参数，如下：
