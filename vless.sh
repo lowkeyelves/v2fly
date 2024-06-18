@@ -62,9 +62,7 @@ systemctl daemon-reload
 
 # 检查域名解析是否正确
 domainName="$1"
-local_ip="$(curl ifconfig.me 2>/dev/null;echo)"
-resolve_ip="$(host "$domainName" | awk '{print $NF}')"
-if [ "$local_ip" != "$resolve_ip" ];then echo "域名解析不正确";exit 9;fi
+
 ##安装acme,并申请加密证书
 source ~/.bashrc
 if nc -z localhost 443;then /etc/init.d/nginx stop;fi
