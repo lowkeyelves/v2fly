@@ -61,6 +61,7 @@ grep -r 'v2ray -config' /etc/systemd/system/* | cut -d: -f1 | xargs -i sed -i 's
 systemctl daemon-reload
 
 # 检查域名解析是否正确
+domainName="$1"
 local_ip="$(curl ifconfig.me 2>/dev/null;echo)"
 resolve_ip="$(host "$domainName" | awk '{print $NF}')"
 if [ "$local_ip" != "$resolve_ip" ];then echo "域名解析不正确";exit 9;fi
