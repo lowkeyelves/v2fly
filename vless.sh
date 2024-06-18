@@ -62,6 +62,17 @@ systemctl daemon-reload
 
 # 检查域名解析是否正确
 domainName="$1"
+# 2.随机生成v2ray需要用到的服务端口
+port="`shuf -i 20000-65000 -n 1`"
+# 3.随机生成一个uuid
+uuid="`uuidgen`"
+# 4.随机生成一个websocket需要使用的path
+path="/`pwgen -A0 6 8 | xargs |sed 's/ /\//g'`"
+# 5.以时间为基准随机创建一个存放ssl证书的目录
+ssl_dir="$(mkdir -pv "/usr/local/etc/v2ray/ssl/`date +"%F-%H-%M-%S"`" |awk -F"'" END'{print $2}')"
+# 6.定义nginx和v2ray配置文件路径
+nginxConfig="/etc/nginx/conf.d/v2ray.conf"
+v2rayConfig="/usr/local/etc/v2ray/config.json"
 
 ##安装acme,并申请加密证书
 source ~/.bashrc
