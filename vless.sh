@@ -4,8 +4,15 @@
 # Plat: ubuntu 18.04+
 # Eg  : bash v2ray_installation_vmess.sh "你的域名" [vless]
 
-if [ -z "$1" ];then echo "域名不能为空";exit;fi
-if [ `id -u` -ne 0 ];then echo "需要root用户";exit;fi
+if [ -z "$1" ]; then
+    echo "域名不能为空"
+    exit 1
+fi
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "需要root用户"
+    exit 1
+fi
 
 # 配置系统时区为东八区
 rm -f /etc/localtime
@@ -104,7 +111,7 @@ server {
             	proxy_set_header X-Forwarded-For "'"$proxy_add_x_forwarded_for"'";
 	}
 }
-" > $nginxConfig
+" > "$nginxConfig"
 # 创建v2ray配置文件目录（01/16/2023最新版默认没有创建该目录）
 mkdir -pv /usr/local/etc/v2ray
 # 配置v2ray，执行如下命令即可添加v2ray配置文件
@@ -169,7 +176,7 @@ echo '
     }
   }
 }
-' > $v2rayConfig
+' > "$v2rayConfig"
 
 # 默认配置vmess协议，如果指定vless协议则配置vless协议
 [ "vless" = "$2" ] && sed -i 's/vmess/vless/' $v2rayConfig
